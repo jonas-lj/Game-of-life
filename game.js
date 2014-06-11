@@ -42,8 +42,8 @@ GameOfLife.prototype.setup = function() {
      */
     this.canvas.game = this;
     var onClick = function(mouseEvent) {
-	var i = Math.floor((mouseEvent.clientX - this.offsetLeft) / this.game.d) - 1;
-	var j = Math.floor((mouseEvent.clientY - this.offsetTop) / this.game.d) - 1;	
+	var i = Math.floor((mouseEvent.pageX - this.offsetLeft) / this.game.d) - 1;
+	var j = Math.floor((mouseEvent.pageY - this.offsetTop) / this.game.d) - 1;	
 	this.game.cells[i][j] = (this.game.cells[i][j] + 1) % 2;
 	this.game.draw(i,j);
     };
