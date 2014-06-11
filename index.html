@@ -1,0 +1,12 @@
+<script src="game.js"></script>
+
+<div>
+  <canvas id="canvas" width="400" height="400" style="border:1px solid #000000;"></canvas>
+  <p>
+    <button onClick="game.pause()">Pause</button>
+    <script>
+      var game = new GameOfLife("canvas", 100, 100, 4);
+      game.start();
+    </script>
+</div>
+
