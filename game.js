@@ -42,12 +42,38 @@ GameOfLife.prototype.setup = function() {
      */
     this.canvas.game = this;
     var onClick = function(mouseEvent) {
-	var i = Math.floor((mouseEvent.pageX - this.offsetLeft) / this.game.d) - 1;
-	var j = Math.floor((mouseEvent.pageY - this.offsetTop) / this.game.d) - 1;	
-	this.game.cells[i][j] = (this.game.cells[i][j] + 1) % 2;
+	var p = this.game.getPosition(mouseEvent);
+	var i = Math.floor(p.x / this.game.d) - 1;
+	var j = Math.floor(p.y / this.game.d) - 1;
+	this.game.toggleCell(i,j);
 	this.game.draw(i,j);
     };
     this.canvas.addEventListener("mousedown", onClick, false);
+};
+
+/**
+ * Get the position, (x,y) coordinage of the given event as an object
+ * with two properties, .x and .y.
+ */
+GameOfLife.prototype.getPosition = function(event)
+{
+    var canvas = document.getElementById("canvas");    
+    var p = {};
+    if (event.x != undefined && event.y != undefined)
+    {
+        p.x = event.x;
+        p.y = event.y;
+    }
+    else // Firefox method to get the position
+    {
+        p.x = event.clientX + document.body.scrollLeft +
+            document.documentElement.scrollLeft;
+        p.y = event.clientY + document.body.scrollTop +
+            document.documentElement.scrollTop;
+    }
+    p.x -= canvas.offsetLeft;
+    p.y -= canvas.offsetTop;
+    return p;
 };
 
 /**
