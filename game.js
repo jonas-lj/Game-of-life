@@ -42,12 +42,19 @@ GameOfLife.prototype.setup = function() {
      */
     this.canvas.game = this;
     var onClick = function(mouseEvent) {
-	var i = Math.round((mouseEvent.clientX - this.offsetLeft) / this.game.d) - 1;
-	var j = Math.round((mouseEvent.clientY - this.offsetTop) / this.game.d) - 1;	
-	this.game.cells[i][j] = this.game.cells[i][j] + 1 % 2;
+	var i = Math.floor((mouseEvent.clientX - this.offsetLeft) / this.game.d) - 1;
+	var j = Math.floor((mouseEvent.clientY - this.offsetTop) / this.game.d) - 1;	
+	this.game.cells[i][j] = (this.game.cells[i][j] + 1) % 2;
 	this.game.draw(i,j);
     };
     this.canvas.addEventListener("mousedown", onClick, false);
+};
+
+/**
+ * If the given cell is alive, make it dead and vice versa.
+ */
+GameOfLife.prototype.toggleCell = function(i,j) {
+    this.cells[i][j] = (this.cells[i][j] + 1) % 2
 };
 
 /**
