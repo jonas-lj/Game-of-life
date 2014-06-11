@@ -80,7 +80,8 @@ GameOfLife.prototype.getPosition = function(event)
  * If the given cell is alive, make it dead and vice versa.
  */
 GameOfLife.prototype.toggleCell = function(i,j) {
-    this.cells[i][j] = (this.cells[i][j] + 1) % 2
+    this.cells[i][j] = (this.cells[i][j] + 1) % 2;
+    this.drawCell(i,j);
 };
 
 /**
@@ -97,6 +98,7 @@ GameOfLife.prototype.pause = function() {
  */
 GameOfLife.prototype.start = function() {
     this.setup();
+    this.draw();
     this.running = true;
     this.run();
 };
@@ -106,7 +108,6 @@ GameOfLife.prototype.start = function() {
  */
 GameOfLife.prototype.run = function() {
     this.step();
-    this.draw();
 
     var self = this;
     var wait = function() {
@@ -128,11 +129,15 @@ GameOfLife.prototype.step = function() {
     for (i = 0; i < this.w; i++) {
 	for (j = 0; j < this.h; j++) {
 	    if (this.cells[i][j]) {
-		if (this.neighbours[i][j] < 2 || this.neighbours[i][j] > 3)
+		if (this.neighbours[i][j] < 2 || this.neighbours[i][j] > 3) {
 		    this.cells[i][j] = 0;
+		    this.drawCell(i,j);
+		}
 	    } else {
-		if (this.neighbours[i][j] == 3)
+		if (this.neighbours[i][j] == 3) {
 		    this.cells[i][j] = 1;
+		    this.drawCell(i,j);
+		}
 	    }
 	}
     }
@@ -179,7 +184,7 @@ GameOfLife.prototype.randomize = function(p) {
  */
 GameOfLife.prototype.drawCell = function(i,j) {
     this.ctx.fillStyle = this.cells[i][j] ? this.aliveColor : this.deadColor;
-    this.ctx.fillRect(i*this.d, j*this.d, (i+1)*this.d, (j+1)*this.d);
+    this.ctx.fillRect(i*this.d, j*this.d, this.d, this.d);
 };
 
 /**
