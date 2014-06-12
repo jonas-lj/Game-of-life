@@ -57,7 +57,6 @@ GameOfLife.prototype.setup = function() {
  */
 GameOfLife.prototype.getPosition = function(event)
 {
-    var canvas = document.getElementById("canvas");    
     var p = {};
     if (event.x != undefined && event.y != undefined)
     {
@@ -71,8 +70,8 @@ GameOfLife.prototype.getPosition = function(event)
         p.y = event.clientY + document.body.scrollTop +
             document.documentElement.scrollTop;
     }
-    p.x -= canvas.offsetLeft;
-    p.y -= canvas.offsetTop;
+    p.x -= this.canvas.offsetLeft;
+    p.y -= this.canvas.offsetTop;
     return p;
 };
 
